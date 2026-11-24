@@ -114,5 +114,62 @@ search.addEventListener('input',()=>{
  noResults.hidden=shown!==0;
 });
 </script>
+ 
+<section id="auth-section">
+  <h2>आदिवासी डिजिटल - Login / Signup</h2>
+
+  <input id="email" type="email"
+    placeholder="अपना Email लिखें">
+
+  <input id="password" type="password"
+    placeholder="Password लिखें">
+
+  <button onclick="signUp()">Signup</button>
+  <button onclick="logIn()">Login</button>
+
+  <p id="auth-message"></p>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL =https://oyuaufqrkweyxwcaeqop.supabase.co
+  "https://oyuaufqrkweyxwcaeqop.supabase.co";
+
+const SUPABASE_KEY =sb_publishable_BJ-op-kvCcGesjxU2nG4uw_cM3ak7Mn
+  "अपनी नई sb_publishable_ वाली Key डालें";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+async function signUp() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabaseClient.auth.signUp({
+    email,
+    password
+  });
+
+  document.getElementById("auth-message").textContent =
+    error ? error.message : "Signup सफल! Email चेक करें।";
+}
+
+async function logIn() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  document.getElementById("auth-message").textContent =
+    error ? error.message : "Login सफल!";
+}
+</script>
+ 
 </body>
 </html>
